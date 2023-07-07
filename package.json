@@ -1,9 +1,11 @@
 {
   "name": "@smiilliin/settings",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Easier to load and write settings",
   "main": "dist/settings.js",
-  "scripts": {},
+  "scripts": {
+    "test": "ts-mocha test/**/*"
+  },
   "keywords": [
     "electron",
     "app",
@@ -17,6 +19,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^18.11.18"
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.11.18",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^5.1.6"
   }
 }

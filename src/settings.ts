@@ -1,29 +1,44 @@
 import path from "path";
 import fs from "fs";
 
-class Settings {
+class SettingManager {
   static appdataDir =
     process.env.APPDATA ||
     (process.platform == "darwin" ? process.env.HOME + "/Library/Preferences" : process.env.HOME + "/.local/share");
   private appDir: string;
 
   constructor(appName: string) {
-    this.appDir = path.join(Settings.appdataDir, appName);
+    this.appDir = path.join(SettingManager.appdataDir, appName);
   }
-  load(fileName: string): any {
+  load(fileName: string, defaultSetting?: any): any {
+    let fileData: any = {};
     try {
-      const fileData = fs.readFileSync(path.join(this.appDir, fileName)).toString();
-      return JSON.parse(fileData);
-    } catch {
-      return {};
+      fileData = JSON.parse(fs.readFileSync(path.join(this.appDir, fileName)).toString());
+    } catch {}
+
+    if (defaultSetting) {
+      const keys = Object.keys(defaultSetting);
+      keys.forEach((key) => {
+        if (!fileData[key]) fileData[key] = defaultSetting[key];
+      });
+
+      if (keys.length > 0) this.set(fileName, fileData);
     }
+
+    return fileData;
   }
   set(fileName: string, data: any) {
     if (!fs.existsSync(this.appDir)) {
-      fs.mkdirSync(this.appDir, { recursive: true });
+      this.createDir();
     }
     fs.writeFileSync(path.join(this.appDir, fileName), JSON.stringify(data));
   }
+  createDir() {
+    fs.mkdirSync(this.appDir, { recursive: true });
+  }
+  getAppdir() {
+    return this.appDir;
+  }
 }
 
-export default Settings;
+export default SettingManager;
