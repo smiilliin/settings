@@ -74,7 +74,10 @@ settingManager.unwatch("setting.json");
 ```
 
 Release all watch
+
+```ts
 settingManager.unwatchAll();
+```
 
 ### CreateDir
 
