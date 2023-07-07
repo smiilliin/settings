@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import * as os from "os";
 
 interface IFileWatch {
   file: string;
@@ -14,10 +15,24 @@ interface IOptions {
   [key: string]: any;
 }
 
+const getAppDataPath = (): string => {
+  const platform = os.platform();
+
+  switch (platform) {
+    case "darwin": {
+      return path.join(os.homedir(), "Library");
+    }
+    case "linux": {
+      return path.join(os.homedir(), "~Appdata");
+    }
+    default: {
+      return path.join(os.homedir(), "AppData", "Roaming");
+    }
+  }
+};
+
 class SettingManager {
-  static appdataDir =
-    process.env.APPDATA ||
-    (process.platform == "darwin" ? process.env.HOME + "/Library/Preferences" : process.env.HOME + "/.local/share");
+  static appdataDir = getAppDataPath();
   private appDir: string;
   private watchFileFuncs: Array<IFileWatch>;
   private watchCallbackFuncs: Array<IWatchCallback>;
