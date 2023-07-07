@@ -1,16 +1,18 @@
-# Settings
+# Settings - Easier to load and write settings
 
-Settings makes it easier to load and write settings!
+## Usage
 
-## Example
+Initialization
+
+```ts
+import Settings from "@smiilliin/settings";
+
+const settings = new Settings("test-app");
+```
 
 Write settings
 
 ```ts
-import Settings from "./settings";
-
-const settings = new Settings("test-app");
-
 settings.set("settings.json", {
   test: "hello world",
 });
@@ -19,9 +21,7 @@ settings.set("settings.json", {
 Load settings
 
 ```ts
-import Settings from "./settings";
-
 const settings = new Settings("test-app");
 
-console.log(settings);
+console.log(settings.load);
 ```

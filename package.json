@@ -1,0 +1,22 @@
+{
+  "name": "@smiilliin/settings",
+  "version": "1.0.0",
+  "description": "Easier to load and write settings",
+  "main": "dist/settings.js",
+  "scripts": {},
+  "keywords": [
+    "electron",
+    "app",
+    "application",
+    "setting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/smiilliin/settings"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.18"
+  }
+}
