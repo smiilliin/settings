@@ -104,6 +104,7 @@ class SettingManager {
    * @param callback callback
    */
   watch(file: string, callback: (options: IOptions) => Promise<void> | void, defaultOption?: IOptions) {
+    callback(this.load(file, defaultOption));
     this.watchCallbackFuncs.push({
       file: file,
       func: callback,
