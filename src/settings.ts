@@ -60,11 +60,15 @@ class SettingManager {
 
     if (defaultSetting) {
       const keys = Object.keys(defaultSetting);
+      let changed = false;
       keys.forEach((key) => {
-        if (!options[key]) options[key] = defaultSetting[key];
+        if (!options[key]) {
+          options[key] = defaultSetting[key];
+          changed = true;
+        }
       });
 
-      if (keys.length > 0) this.set(file, options);
+      if (changed) this.set(file, options);
     }
 
     return options;
