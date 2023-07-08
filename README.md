@@ -22,12 +22,24 @@ settingManager.set("settings.json", {
 });
 ```
 
-### SetOption
-
 Set option
 
 ```ts
 settingManager.setOption("settings.json", "test", "hello world");
+```
+
+### Delete
+
+Delete file
+
+```ts
+settingManager.delete("settings.json");
+```
+
+Delete option
+
+```ts
+settingManager.deleteOption("settings.json", "test");
 ```
 
 ### Load

@@ -83,11 +83,29 @@ class SettingManager {
   /**
    * Set option
    * @param file file name
+   * @param key option name
    * @param option option
    */
   setOption(file: string, key: string, option: any) {
     let options = this.load(file);
     options[key] = option;
+    this.set(file, options);
+  }
+  /**
+   * Delete file
+   * @param file file name
+   */
+  delete(file: string) {
+    fs.unlinkSync(path.join(this.appDir, file));
+  }
+  /**
+   * Delete option
+   * @param file file name
+   * @param key option name
+   */
+  deleteOption(file: string, key: string) {
+    let options = this.load(file);
+    delete options[key];
     this.set(file, options);
   }
   /**

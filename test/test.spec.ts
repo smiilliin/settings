@@ -45,6 +45,17 @@ describe(`Settings`, () => {
       assert(loadedSetting[key] === defaultSettings[key]);
     });
   });
+  it(`Delete option`, () => {
+    settingManager.set("test.json", { a: "asdf" });
+    settingManager.deleteOption("test.json", "a");
+
+    assert(!settingManager.load("test.json").a);
+  });
+  it(`Delete option file`, () => {
+    settingManager.delete("test.json");
+
+    assert(Object.keys(settingManager.load("test.json")).length == 0);
+  });
   it(`Watch options and set options`, async () => {
     const data = await new Promise<any>((resolve) => {
       settingManager.watch("test.json", (data) => {
