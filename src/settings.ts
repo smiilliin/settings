@@ -52,10 +52,12 @@ class SettingManager {
    * @param defaultSetting default setting
    * @returns file options
    */
-  load(file: string, defaultSetting?: IOptions): IOptions {
+  load<T>(file: string, defaultSetting?: IOptions): T {
     let options: IOptions = {};
     try {
-      options = JSON.parse(fs.readFileSync(path.join(this.appDir, file)).toString());
+      options = JSON.parse(
+        fs.readFileSync(path.join(this.appDir, file)).toString()
+      );
     } catch {}
 
     if (defaultSetting) {
@@ -71,7 +73,7 @@ class SettingManager {
       if (changed) this.set(file, options);
     }
 
-    return options;
+    return options as T;
   }
   /**
    * Set setting file
@@ -91,7 +93,7 @@ class SettingManager {
    * @param option option
    */
   setOption(file: string, key: string, option: any) {
-    let options = this.load(file);
+    let options = this.load<IOptions>(file);
     options[key] = option;
     this.set(file, options);
   }
@@ -108,7 +110,7 @@ class SettingManager {
    * @param key option name
    */
   deleteOption(file: string, key: string) {
-    let options = this.load(file);
+    let options = this.load<IOptions>(file);
     delete options[key];
     this.set(file, options);
   }
@@ -140,13 +142,19 @@ class SettingManager {
    * @param file file name
    * @param callback callback
    */
-  watch(file: string, callback: (options: IOptions) => Promise<void> | void, defaultOption?: IOptions) {
+  watch(
+    file: string,
+    callback: (options: IOptions) => Promise<void> | void,
+    defaultOption?: IOptions
+  ) {
     this.watchCallbackFuncs.push({
       file: file,
       func: callback,
       defaultOption: defaultOption,
     });
-    if (this.watchFileFuncs.findIndex((element) => element.file === file) == -1) {
+    if (
+      this.watchFileFuncs.findIndex((element) => element.file === file) == -1
+    ) {
       this.makeWatch(file);
     }
   }
@@ -155,7 +163,9 @@ class SettingManager {
    * @param file file name
    */
   unwatch(file: string) {
-    if (this.watchFileFuncs.findIndex((element) => element.file === file) != -1) {
+    if (
+      this.watchFileFuncs.findIndex((element) => element.file === file) != -1
+    ) {
       fs.unwatchFile(path.join(this.getAppdir(), file));
     }
   }
@@ -183,3 +193,4 @@ class SettingManager {
 }
 
 export default SettingManager;
+export type { IOptions };

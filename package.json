@@ -1,6 +1,6 @@
 {
   "name": "@smiilliin/settings",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Easier to load and write settings",
   "main": "dist/settings.js",
   "scripts": {
